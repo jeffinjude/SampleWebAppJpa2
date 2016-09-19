@@ -33,15 +33,10 @@ public class PersistDataDao {
 		truncateParty.executeUpdate();
 		Query truncatePolicy = entityManager.createNativeQuery("TRUNCATE TABLE tbl_policy;");
 		truncatePolicy.executeUpdate();
-		Query truncatePolicyVehicle = entityManager.createNativeQuery("TRUNCATE TABLE tbl_policy_vehicle;");
-		truncatePolicyVehicle.executeUpdate();
 		Query truncateVehicle = entityManager.createNativeQuery("TRUNCATE TABLE tbl_vehicle;");
 		truncateVehicle.executeUpdate();
 		Query truncateAddress = entityManager.createNativeQuery("TRUNCATE TABLE tbl_address;");
 		truncateAddress.executeUpdate();
-		Query truncateVehicleAddress = entityManager.createNativeQuery("TRUNCATE TABLE tbl_vehicle_address;");
-		truncateVehicleAddress.executeUpdate();
-		
 		/********************************************/
 		/*****Vehicle To Address (One to Many)*********/
 		/********************************************/
@@ -62,11 +57,15 @@ public class PersistDataDao {
 		vehicle1.setVehicleName("VehicleOne");
 		vehicle1.getAddress().add(address1);
 		vehicle1.getAddress().add(address2);
+		address1.setVehicle(vehicle1);
+		address2.setVehicle(vehicle1);
 		//entityManager.persist(vehicle1);
 		Vehicle vehicle2 =new Vehicle();
 		vehicle2.setVehicleName("VehicleTwo");
 		vehicle2.getAddress().add(address3);
 		vehicle2.getAddress().add(address4);
+		address3.setVehicle(vehicle2);
+		address4.setVehicle(vehicle2);
 		//entityManager.persist(vehicle2);
 		/********************************************/
 		/*****Policy to Vehicle(One to Many)*********/
@@ -75,6 +74,8 @@ public class PersistDataDao {
 		policy.setPolicyName("PolicyOne");
 		policy.getVehicle().add(vehicle1);
 		policy.getVehicle().add(vehicle2);
+		vehicle1.setPolicy(policy);
+		vehicle2.setPolicy(policy);
 		entityManager.persist(policy);
 		/*******************************************/
 		/*****Party to Policy (Many to One)*********/

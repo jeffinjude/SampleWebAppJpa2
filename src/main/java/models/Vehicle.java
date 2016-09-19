@@ -28,15 +28,10 @@ public class Vehicle {
 	private int vehicleId;
 	@Column(name = "vehicle_name")
 	private String vehicleName;
-	@ManyToOne(cascade=CascadeType.PERSIST)
-	@JoinTable(name="tbl_policy_vehicle", joinColumns=@JoinColumn(name="vehicle_id"),
-		inverseJoinColumns=@JoinColumn(name="policy_id")
-	)
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="policy_id")
 	private Policy policy;
-	@OneToMany(cascade=CascadeType.PERSIST)
-	@JoinTable(name="tbl_vehicle_address", joinColumns=@JoinColumn(name="vehicle_id"),
-				inverseJoinColumns=@JoinColumn(name="address_id")
-			)
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="vehicle",targetEntity=Address.class)
 	private Collection<Address> address = new ArrayList<Address>(); 
 	
 	public int getVehicleId() {

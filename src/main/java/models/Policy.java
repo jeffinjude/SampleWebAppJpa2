@@ -27,10 +27,7 @@ public class Policy {
 	private int policyId;
 	@Column(name = "policy_name")
 	private String policyName;
-	@OneToMany(cascade=CascadeType.PERSIST)
-	@JoinTable(name="tbl_policy_vehicle", joinColumns=@JoinColumn(name="policy_id"),
-				inverseJoinColumns=@JoinColumn(name="vehicle_id")
-			)
+	@OneToMany(cascade=CascadeType.ALL,mappedBy="policy",targetEntity=Vehicle.class)
 	private Collection<Vehicle> vehicle = new ArrayList<Vehicle>(); 
 	
 	public int getPolicyId() {

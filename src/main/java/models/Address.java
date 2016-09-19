@@ -24,10 +24,8 @@ public class Address {
 	private int addressId;
 	@Column(name = "address_name")
 	private String addressName;
-	@ManyToOne(cascade=CascadeType.PERSIST)
-	@JoinTable(name="tbl_vehicle_address", joinColumns=@JoinColumn(name="address_id"),
-		inverseJoinColumns=@JoinColumn(name="vehicle_id")
-	)
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="vehicle_id")
 	private Vehicle vehicle;
 	
 	public int getAddressId() {
