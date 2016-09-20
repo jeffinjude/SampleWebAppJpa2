@@ -45,16 +45,16 @@ public class FetchDataDao {
 		System.out.println("********************************************************************************************************");
 		System.out.println("WITHOUT USING JOIN FETCH");
 		System.out.println("********************************************************************************************************");
-		Query vehicleAddress2 = entityManager.createQuery("FROM Vehicle");
-		List<Vehicle> fetchedVehicleData2 = vehicleAddress2.getResultList();
-		System.out.println("Vehicle Details :");
+		Query policyQry = entityManager.createQuery("SELECT p FROM Policy p");
+		List<Policy> policyList = policyQry.getResultList();
+		System.out.println("Policy Details :");
 		System.out.println("*****************");
-		for(Vehicle data : fetchedVehicleData2) {
-			System.out.println(data.getVehicleName());
-			Iterator<Address> itr = data.getAddresses().iterator();
+		for(Policy data : policyList) {
+			System.out.println(data.getName());
+			Iterator<Party> itr = data.getParties().iterator();
 			while (itr.hasNext()) {
-				Address adr = itr.next();
-				System.out.println("City : " + adr.getCity() + " State : " + adr.getState());
+				Party p = itr.next();
+				System.out.println("Party : " + p.getName());
 			}
 			System.out.println("------------------");
 		}
@@ -64,16 +64,16 @@ public class FetchDataDao {
 		System.out.println("********************************************************************************************************");
 		System.out.println("USING JOIN FETCH");
 		System.out.println("********************************************************************************************************");
-		Query vehicleAddress = entityManager.createQuery("FROM Vehicle v JOIN FETCH v.addresses");
-		List<Vehicle> fetchedVehicleData = vehicleAddress.getResultList();
-		System.out.println("Vehicle Details :");
+		Query policyQry2 = entityManager.createQuery("SELECT p FROM Policy p JOIN FETCH p.parties");
+		List<Policy> policyList2 = policyQry2.getResultList();
+		System.out.println("Policy Details :");
 		System.out.println("*****************");
-		for(Vehicle data : fetchedVehicleData) {
-			System.out.println(data.getVehicleName());
-			Iterator<Address> itr = data.getAddresses().iterator();
+		for(Policy data : policyList2) {
+			System.out.println(data.getName());
+			Iterator<Party> itr = data.getParties().iterator();
 			while (itr.hasNext()) {
-				Address adr = itr.next();
-				System.out.println("City : " + adr.getCity() + " State : " + adr.getState());
+				Party p = itr.next();
+				System.out.println("Party : " + p.getName());
 			}
 			System.out.println("------------------");
 		}

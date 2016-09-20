@@ -55,7 +55,7 @@ public class CascadeDataDao {
 		
 		//Only vehicle1 is persisted but since in the entity bean cascade is set to all adr1 and adr2 are also persisted
 		entityManager.persist(vehicle1);
-		vehicle1.setVehicleName("Vehicle1_updated");//Any change made after PERSIST will get updated in the database
+		vehicle1.setVehicleName("Vehicle1_updated_after_persist");//Any change made after PERSIST will get updated in the database
 		
 		/*******************************************/
 		/*************MERGE Operation*************/
@@ -74,7 +74,7 @@ public class CascadeDataDao {
 		adr3.setVehicle(vehicle2);
 		adr4.setVehicle(vehicle2);
 		
-		//Only vehicle1 is persisted but since in the entity bean cascade is set to all adr1 and adr2 are also persisted
+		//Only vehicle2 is persisted but since in the entity bean cascade is set to all adr3 and adr4 are also persisted
 		Vehicle vehicleMergeEntity = entityManager.merge(vehicle2);
 		vehicle2.setVehicleName("Vehicle2_updated");//Any change made after MERGE will not get updated in the database
 		//Changes made to the merge entity (vehicleMergeEntity) will get updated in the database
@@ -82,7 +82,6 @@ public class CascadeDataDao {
 		
 		/*******************************************/
 		/*************REMOVE Operation*************/
-		/*******************************************/
 		/*******************************************/
 		Address adrToDel1 = new Address();
 		adrToDel1.setCity("City");
@@ -101,7 +100,17 @@ public class CascadeDataDao {
 		//insert the entity
 		entityManager.persist(vehicleToDel);
 		//Remove the entity
+		//entityManager.remove(adrToDel1);
+		//entityManager.remove(adrToDel2);
 		entityManager.remove(vehicleToDel);//Since cascade type is set to all the child address entities are also removed.
+		
+		/*******************************************/
+		/*************REFRESH Operation*************/
+		/*******************************************/
+		vehicle1.setVehicleName("New Vehicle"); //Vehicle name modified in the entity (in memory)
+		System.out.println("Vehicle Name before refresh :" + vehicle1.getVehicleName()); //Output : New Vehicle
+		entityManager.refresh(vehicle1); // Vehicle entity is refreshed with data from the database and this is loaded into memory
+		System.out.println("Vehicle Name after refresh :" + vehicle1.getVehicleName()); // Outputs the vehicle name present in the db
 		
 		//closing the entity manager transaction
 		entityManager.getTransaction().commit();
