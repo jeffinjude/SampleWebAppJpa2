@@ -21,7 +21,7 @@ public class JpaManager {
 	    catch (Throwable ex) 
 	    {
 	    	System.err.println("Application terminated. Could not connect to database.");
-	    	System.exit(0);
+	    	//System.exit(0);
 	    	throw new ExceptionInInitializerError(ex);
 	    }
 	  }

@@ -7,8 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -16,29 +16,38 @@ import javax.persistence.Table;
  * @author jeffin
  */
 @Entity
-@Table(name = "tbl_address")
+@Table(name = "address_details")
+@NamedQuery(name="Address.getAllAddresses", query="SELECT adr FROM Address adr") 
 public class Address {
 	@Id
 	@GeneratedValue( strategy=GenerationType.IDENTITY)
-	@Column(name = "address_id")
-	private int addressId;
-	@Column(name = "address_name")
-	private String addressName;
+	@Column(name = "ADDRESS_ID")
+	private Long id;
+	@Column(name = "CITY")
+	private String city;
+	@Column(name="STATE")
+	private String state;
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="vehicle_id")
 	private Vehicle vehicle;
 	
-	public int getAddressId() {
-		return addressId;
+	public Long getId() {
+		return id;
 	}
-	public void setAddressId(int addressId) {
-		this.addressId = addressId;
+	public void setId(Long id) {
+		this.id = id;
 	}
-	public String getAddressName() {
-		return addressName;
+	public String getCity() {
+		return city;
 	}
-	public void setAddressName(String addressName) {
-		this.addressName = addressName;
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
 	}
 	public Vehicle getVehicle() {
 		return vehicle;
@@ -46,5 +55,4 @@ public class Address {
 	public void setVehicle(Vehicle vehicle) {
 		this.vehicle = vehicle;
 	}
-	
 }

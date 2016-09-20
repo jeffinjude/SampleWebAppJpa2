@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -20,25 +21,26 @@ import javax.persistence.Table;
  * @author jeffin
  */
 @Entity
-@Table(name = "tbl_vehicle")
+@Table(name = "vehicle_details")
+@NamedQuery(name="Vehicle.getAllVehicles", query="SELECT vehicle FROM Vehicle vehicle") 
 public class Vehicle {
 	@Id
 	@GeneratedValue( strategy=GenerationType.IDENTITY)
-	@Column(name = "vehicle_id")
-	private int vehicleId;
-	@Column(name = "vehicle_name")
+	@Column(name = "VEHICLE_ID")
+	private Long id;
+	@Column(name = "VEHICLE_NAME")
 	private String vehicleName;
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="policy_id")
 	private Policy policy;
 	@OneToMany(cascade=CascadeType.ALL,mappedBy="vehicle",targetEntity=Address.class)
-	private Collection<Address> address = new ArrayList<Address>(); 
+	private Collection<Address> addresses = new ArrayList<Address>();
 	
-	public int getVehicleId() {
-		return vehicleId;
+	public Long getId() {
+		return id;
 	}
-	public void setVehicleId(int vehicleId) {
-		this.vehicleId = vehicleId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public String getVehicleName() {
 		return vehicleName;
@@ -52,11 +54,10 @@ public class Vehicle {
 	public void setPolicy(Policy policy) {
 		this.policy = policy;
 	}
-	public Collection<Address> getAddress() {
-		return address;
+	public Collection<Address> getAddresses() {
+		return addresses;
 	}
-	public void setAddress(Collection<Address> address) {
-		this.address = address;
+	public void setAddresses(Collection<Address> addresses) {
+		this.addresses = addresses;
 	}
-	
 }

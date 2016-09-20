@@ -7,6 +7,7 @@
 <title>JPA Demo</title>
 </head>
 <body>
-	<a href="PersistData">Persist Data</a>
+	<a href="PersistData">Persist Data using JPA Relationships</a><br>
+	<a href="Cascade">Cascade</a>
 </body>
 </html>
